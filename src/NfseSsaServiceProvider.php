@@ -1,6 +1,6 @@
 <?php
 
-namespace Potelo\NfseSsa;
+namespace LucianoCorreia\NfseSsa;
 
 use Illuminate\Support\ServiceProvider;
 

@@ -2,7 +2,7 @@
 
 ## Introdução
 
-NfseSsa é um pacote para laravel que fornece uma interface para emissão de 
+NfseSsa é um pacote para laravel que fornece uma interface para emissão de
 Nota Fiscal de Serviços Eletrônica (NFS-e) em Salvador - BA.
 
 ## Instalação Laravel 5.x
@@ -10,21 +10,23 @@ Nota Fiscal de Serviços Eletrônica (NFS-e) em Salvador - BA.
 Instale esse pacote pelo composer:
 
 ```
-composer require potelo/nfse-ssa
+composer require lucianocorreia/nfse-ssa
 ```
 
 Se você não utiliza o [auto-discovery](https://medium.com/@taylorotwell/package-auto-discovery-in-laravel-5-5-ea9e3ab20518), Adicione o ServiceProvider em config/app.php
 
 ```php
-Potelo\NfseSsa\NfseSsaServiceProvider::class,
+LucianoCorreia\NfseSsa\NfseSsaServiceProvider::class,
 ```
 
 ## Geração dos arquivos do certificado
+
 Você deve ter recebido um certificado com a extensão **pfx**, ele serve para o ambiente
-de produção e homologação. Vamos precisar converter 
-esse arquivo para a extensão **pem** e também extrair a chave pública. 
+de produção e homologação. Vamos precisar converter
+esse arquivo para a extensão **pem** e também extrair a chave pública.
 Para extrair as duas chaves vamos utilizar os comandos no terminal (cmd no Windows)
 e inserir a senha quando solicitado:
+
 ```
 openssl pkcs12 -in Certificado.pfx -out priv.pem -nodes
 ```
@@ -35,15 +37,17 @@ openssl pkcs12 -in Certificado.pfx -clcerts -nokeys -out public.pem
 
 Você deve guardar os dois arquivos gerados, **priv.pem** e **public.pem**.
 
- ## Configuração
+## Configuração
 
 Copie o arquivo de configuração do pacote para seu ambiente local, usando o comando publish:
+
 ```
-php artisan vendor:publish --provider="Potelo\NfseSsa\NfseSsaServiceProvider"
+php artisan vendor:publish --provider="LucianoCorreia\NfseSsa\NfseSsaServiceProvider"
 ```
 
 Um arquivo **nfse-ssa.php** será criado na pasta **config**, você deve editar ele e colocar
 os caminhos para os dois arquivos que foram gerados.
+
 ```
 'homologacao' => env('NFSESSA_HOMOLOGACAO', true),
 
@@ -53,9 +57,11 @@ os caminhos para os dois arquivos que foram gerados.
 ```
 
 No seu **env** adicione a variável:
+
 ```
 NFSESSA_HOMOLOGACAO=true
 ```
+
 Só mude para **false** quando for colocar em produção.
 
 Quando tiver desenvolvendo, é essencial que utilize o painel web do ambiente de homologação
@@ -72,8 +78,8 @@ https://nfse.sefaz.salvador.ba.gov.br/OnLine/Institucional/FaqTecnologia.aspx
 ## Emissão do Recibo Provisório de Serviços (RPS)
 
 Para gerar a nota fiscal, precisamos enviar um RPS para a API da Prefeitura, que
-uma Nota Fiscal será gerada automaticamente a partir dele. 
-Instanciamos o objeto NfseSsa por injeção de dependência no método do Controller e 
+uma Nota Fiscal será gerada automaticamente a partir dele.
+Instanciamos o objeto NfseSsa por injeção de dependência no método do Controller e
 enviamos o RPS através do método **enviarLoteRps**:
 
 ```php
@@ -82,14 +88,14 @@ enviamos o RPS através do método **enviarLoteRps**:
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
-use Potelo\NfseSsa\NfseSsa;
+use LucianoCorreia\NfseSsa\NfseSsa;
 
 class Controller extends BaseController{
-  
+
     public function enviarRPS(NfseSsa $nfsa)
     {
         // ou $nfsa = app(NfseSsa::class);
-        
+
         $result = $nfsa->enviarLoteRps([
           'numero_lote' => 1,
           'id' => '001',
@@ -100,10 +106,10 @@ class Controller extends BaseController{
               'identificacao' => [
                   'numero' => 1,
                   'serie' => 'A',
-                  'tipo' => 1 // 1 - RPS, 2 – Nota Fiscal Conjugada (Mista), 3 – Cupom 
+                  'tipo' => 1 // 1 - RPS, 2 – Nota Fiscal Conjugada (Mista), 3 – Cupom
               ],
               'data_emissao' => '2018-08-01T16:45:14',
-              'natureza_operacao' => 1, 
+              'natureza_operacao' => 1,
               /* Código de natureza da operação
                   1 – Tributação no município
                   2 - Tributação fora do município
@@ -175,21 +181,23 @@ class Controller extends BaseController{
               ]
           ]
         ]);
-        
+
         // Sucesso
         if ($result->getStatus()) {
             return $result->getData();
         }
-    
+
         return $result->getErrors();
     }
-  
+
 }
 ```
-Caso seja gerado com sucesso, no método **$result->getData()** vai ter o número
+
+Caso seja gerado com sucesso, no método **\$result->getData()** vai ter o número
 do protocolo, que será utilizado em outras consultas.
 
 Exemplo de retorno com sucesso:
+
 ```
 {
   NumeroLote: "1",
@@ -197,7 +205,9 @@ Exemplo de retorno com sucesso:
   Protocolo: "41512"
 }
 ```
+
 Exemplo de retorno com erro:
+
 ```
 [
   {
@@ -237,16 +247,18 @@ public function consultarSituacaoLoteRps(NfseSsa $nfsa)
 ```
 
 Exemplo de retorno com sucesso:
+
 ```
 {
   NumeroLote: "1",
-  Situacao: "4" // 1 – Não Recebido, 2 – Não Processado, 3 – Processado com Erro, 4 – Processado com Sucesso 
+  Situacao: "4" // 1 – Não Recebido, 2 – Não Processado, 3 – Processado com Erro, 4 – Processado com Sucesso
 }
 ```
 
 ### Consultar Nota Fiscal pelo RPS
 
 Consulta uma Nota Fiscal gerada a partir de um RPS através do método **consultarNfseRps**
+
 ```php
 public function consultarNfseRps(NfseSsa $nfsa)
 {
@@ -272,6 +284,7 @@ public function consultarNfseRps(NfseSsa $nfsa)
 ```
 
 ### Consultar Notas Fiscais
+
 ```php
 public function consultarNfse(NfseSsa $nfsa)
 {
