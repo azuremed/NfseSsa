@@ -1,6 +1,6 @@
 <?php
 
-namespace LucianoCorreia\NfseSsa\Services;
+namespace Azuremed\NfseSsa\Services;
 
 
 use RobRichards\XMLSecLibs\XMLSecurityDSig;

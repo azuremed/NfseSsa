@@ -1,7 +1,7 @@
 <?php
 
 
-namespace LucianoCorreia\NfseSsa\Request;
+namespace Azuremed\NfseSsa\Request;
 
 
 class Error

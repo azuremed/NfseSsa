@@ -10,13 +10,13 @@ Nota Fiscal de Serviços Eletrônica (NFS-e) em Salvador - BA.
 Instale esse pacote pelo composer:
 
 ```
-composer require lucianocorreia/nfse-ssa
+composer require azuremed/nfse-ssa
 ```
 
 Se você não utiliza o [auto-discovery](https://medium.com/@taylorotwell/package-auto-discovery-in-laravel-5-5-ea9e3ab20518), Adicione o ServiceProvider em config/app.php
 
 ```php
-LucianoCorreia\NfseSsa\NfseSsaServiceProvider::class,
+Azuremed\NfseSsa\NfseSsaServiceProvider::class,
 ```
 
 ## Geração dos arquivos do certificado
@@ -42,7 +42,7 @@ Você deve guardar os dois arquivos gerados, **priv.pem** e **public.pem**.
 Copie o arquivo de configuração do pacote para seu ambiente local, usando o comando publish:
 
 ```
-php artisan vendor:publish --provider="LucianoCorreia\NfseSsa\NfseSsaServiceProvider"
+php artisan vendor:publish --provider="Azuremed\NfseSsa\NfseSsaServiceProvider"
 ```
 
 Um arquivo **nfse-ssa.php** será criado na pasta **config**, você deve editar ele e colocar
@@ -88,7 +88,7 @@ enviamos o RPS através do método **enviarLoteRps**:
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
-use LucianoCorreia\NfseSsa\NfseSsa;
+use Azuremed\NfseSsa\NfseSsa;
 
 class Controller extends BaseController{
 

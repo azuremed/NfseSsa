@@ -1,6 +1,6 @@
 <?php
 
-namespace LucianoCorreia\NfseSsa;
+namespace Azuremed\NfseSsa;
 
 use Illuminate\Support\ServiceProvider;
 

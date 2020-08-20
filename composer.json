@@ -1,31 +1,31 @@
 {
-    "name": "lucianocorreia/nfse-ssa",
-    "description": "Emissão de Nota Fiscal de Serviços Eletrônica (NFS-e) em Salvador-BA",
-    "type": "library",
-    "require": {
-        "robrichards/xmlseclibs": "^3.0"
+  "name": "azuremed/nfse-ssa",
+  "description": "Emissão de Nota Fiscal de Serviços Eletrônica (NFS-e) em Salvador-BA",
+  "type": "library",
+  "require": {
+    "robrichards/xmlseclibs": "^3.0"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Azuremed",
+      "email": "contato@azuremed.com.br"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Azuremed\\NfseSsa\\": "src/"
     },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Gabriel Peixoto",
-            "email": "gabriel@potelo.com.br"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "LucianoCorreia\\NfseSsa\\": "src/"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "LucianoCorreia\\NfseSsa\\NfseSsaServiceProvider"
-            ]
-        }
-    },
-    "minimum-stability": "dev"
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Azuremed\\NfseSsa\\NfseSsaServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev"
 }

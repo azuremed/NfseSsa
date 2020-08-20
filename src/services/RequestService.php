@@ -1,11 +1,11 @@
 <?php
 
-namespace LucianoCorreia\NfseSsa\Services;
+namespace Azuremed\NfseSsa\Services;
 
 
-use LucianoCorreia\NfseSsa\MySoapClient;
-use LucianoCorreia\NfseSsa\Request\Error;
-use LucianoCorreia\NfseSsa\Request\Response;
+use Azuremed\NfseSsa\MySoapClient;
+use Azuremed\NfseSsa\Request\Error;
+use Azuremed\NfseSsa\Request\Response;
 
 class RequestService
 {

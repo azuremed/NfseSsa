@@ -1,9 +1,9 @@
 <?php
 
-namespace LucianoCorreia\NfseSsa;
+namespace Azuremed\NfseSsa;
 
-use LucianoCorreia\NfseSsa\Services\RequestService;
-use LucianoCorreia\NfseSsa\Services\SignatureService;
+use Azuremed\NfseSsa\Services\RequestService;
+use Azuremed\NfseSsa\Services\SignatureService;
 
 class NfseSsa
 {
